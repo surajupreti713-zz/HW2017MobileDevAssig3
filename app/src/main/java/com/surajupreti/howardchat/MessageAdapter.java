@@ -29,9 +29,8 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         TextView messageTextView = (TextView) convertView.findViewById(R.id.messageTextView);
         TextView authorTextView = (TextView) convertView.findViewById(R.id.nameTextView);
         Message message = getItem(position);
-        messageTextView.setText(message.getText());
         authorTextView.setText(message.getName());
-
+        messageTextView.setText(message.getText());
         return convertView;
     }
 }

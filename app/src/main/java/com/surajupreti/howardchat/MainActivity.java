@@ -91,6 +91,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+        Intent i = new Intent(this, MessageNotificationService.class);
+        stopService(i);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Intent i = new Intent(this, MessageNotificationService.class);
+        startService(i);
     }
 
     @Override

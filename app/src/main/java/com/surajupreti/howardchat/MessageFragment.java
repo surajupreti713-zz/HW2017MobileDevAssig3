@@ -21,11 +21,8 @@ import java.util.List;
 
 public class MessageFragment extends Fragment {
 
-    //private FirebaseAuth mAuth;
-
     private MessageAdapter mMessageAdapter;
     private List<Message> mMessages;
-
     private ListView mListView;
     private EditText mEditText;
     private Button mSendButton;
@@ -38,27 +35,23 @@ public class MessageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_message, container, false);
         mListView = (ListView) v.findViewById(R.id.list_view);
-
         mEditText = (EditText) v.findViewById(R.id.edit_view);
-
         MessageDataSource.get(getContext()).getMessages(new MessageDataSource.MessageListener() {
             @Override
             public void onMessageReceived(List<Message> messages) {
                 mMessages = messages;
                 mListView.setAdapter(new MessageAdapter(getContext(), R.layout.list_view_item, messages));
+                mListView.setSelection(messages.size() - 1);    //this statement will show the latest messages that is sent
             }
         });
-
 
         mSendButton = (Button) v.findViewById(R.id.send_button);
         mSendButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 String id = currentUser.getUid();
                 Log.i("aaa", "This is the id" + id);
@@ -66,9 +59,9 @@ public class MessageFragment extends Fragment {
                 String text = mEditText.getText().toString();
                 Message message = new Message(name, id, text);
                 MessageDataSource.get(getContext()).sendMessage(message);
+                mEditText.setText("");
             }
         });
-
         return v;
     }
 
