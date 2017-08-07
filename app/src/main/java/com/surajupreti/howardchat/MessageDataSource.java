@@ -66,9 +66,9 @@ public class MessageDataSource {
         DatabaseReference newMessageRef = messagesRef.push();
 
         Map<String, String> messageValMap = new HashMap<>();
-        messageValMap.put("mUserName", message.getName());
-        messageValMap.put("mUserId", message.getId());
-        messageValMap.put("mContent", message.getText());
+        messageValMap.put("fromUserName", message.getName());
+        messageValMap.put("fromUserId", message.getId());
+        messageValMap.put("content", message.getText());
 
         newMessageRef.setValue(messageValMap, new DatabaseReference.CompletionListener(){
             @Override
