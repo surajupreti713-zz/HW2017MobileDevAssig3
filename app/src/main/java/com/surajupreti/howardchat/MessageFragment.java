@@ -12,6 +12,7 @@ import android.widget.ListView;
 public class MessageFragment extends Fragment {
 
     private ListView mListView;
+
     private EditText mEditText;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,6 +23,8 @@ public class MessageFragment extends Fragment {
         return v;
     }
 
+    private void getMessages() {
 
+    }
 
 }
