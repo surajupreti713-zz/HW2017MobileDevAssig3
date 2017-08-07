@@ -17,13 +17,13 @@ import java.util.Map;
 public class MessageDataSource {
 
     public interface MessageListener {
-        void onMessageReceived(List<? extends Message> messages);
+        void onMessageReceived(List<Message> messages);
     }
 
     private static MessageDataSource sMessageDataSource;
     private Context mContext;
 
-    private static MessageDataSource get(Context context) {
+    public static MessageDataSource get(Context context) {
         if (sMessageDataSource == null) {
             sMessageDataSource = new MessageDataSource(context);
         }
@@ -33,7 +33,6 @@ public class MessageDataSource {
     private MessageDataSource(Context context) {
         mContext = context;
     }
-
 
     //Firebase methods
     public void getMessages(final MessageListener messageListener) {
@@ -45,8 +44,10 @@ public class MessageDataSource {
                 List<Message> messages = new ArrayList<>();
                 Iterable<DataSnapshot> iter = dataSnapshot.getChildren();
                 for(DataSnapshot messageSnapshot: iter) {
-                    Message message = new Message(messageSnapshot);
-                    messages.add(message);
+                    if (messageSnapshot.child("fromUserId").getValue() != null) {
+                        Message message = new Message(messageSnapshot);
+                        messages.add(message);
+                    }
                 }
                 messageListener.onMessageReceived(messages);
             }
@@ -75,7 +76,7 @@ public class MessageDataSource {
                 if (databaseError == null) {
                     Toast.makeText(mContext, "Message sent!", Toast.LENGTH_SHORT).show();
                 } else {
-                    
+
                 }
             }
         });

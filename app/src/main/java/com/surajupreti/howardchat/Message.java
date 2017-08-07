@@ -14,9 +14,9 @@ public class Message {
     }
 
     public Message(DataSnapshot messageSnapshot) {
-        mUsername = messageSnapshot.child("mUsername").getValue(String.class);
-        mUserid = messageSnapshot.child("mUserId").getValue(String.class);
-        mUsertext = messageSnapshot.child("mUsertext").getValue(String.class);
+        mUsername = messageSnapshot.child("fromUserName").getValue(String.class);
+        mUserid = messageSnapshot.child("fromUserId").getValue(String.class);
+        mUsertext = messageSnapshot.child("content").getValue(String.class);
     }
 
     public String getId() {

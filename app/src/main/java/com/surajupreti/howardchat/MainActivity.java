@@ -2,6 +2,8 @@ package com.surajupreti.howardchat;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,6 +138,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         invalidateOptionsMenu();
         String toastText = user == null ? "Signed out" : "Signed in as "+user.getEmail();
         Toast.makeText(MainActivity.this, toastText , Toast.LENGTH_SHORT).show();
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.container);
+        if (user != null && currentFragment == null) {
+            Fragment fragment = new MessageFragment();
+            fm.beginTransaction().replace(R.id.container, fragment).commit();
+        }
+        else if (user == null && currentFragment != null) {
+            fm.beginTransaction().remove(currentFragment).commit();
+        }
     }
 
     private void signIn() {
